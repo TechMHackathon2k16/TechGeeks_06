@@ -16,7 +16,7 @@ import java.net.URL;
  */
 public class CloudConnect {
     private static final String LOG_TAG = CloudConnect.class.getSimpleName();
-    final static String TIMETABLE_BASE_URI =
+    final static String API_BASE_URI =
             "http://192.168.43.40:8080";
     final static String API_PATH = "api";
     final static String DEVICE_PATH = "devices";
@@ -68,7 +68,7 @@ public class CloudConnect {
     }
 
     public static URL getURL(String targtePath) {
-        Uri builtUri = Uri.parse(TIMETABLE_BASE_URI).buildUpon()
+        Uri builtUri = Uri.parse(API_BASE_URI).buildUpon()
                 .appendPath(API_PATH)
                 .appendPath(targtePath)
                 .build();
@@ -85,7 +85,7 @@ public class CloudConnect {
     }
 
     public static URL getURL(String targtePath, String exploredPath) {
-        Uri builtUri = Uri.parse(TIMETABLE_BASE_URI).buildUpon()
+        Uri builtUri = Uri.parse(API_BASE_URI).buildUpon()
                 .appendPath(API_PATH)
                 .appendPath(targtePath)
                 .appendPath(exploredPath)
