@@ -1,11 +1,14 @@
 package och.adityaworks.com.och;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import org.json.JSONArray;
@@ -19,8 +22,10 @@ public class AddDevice extends AppCompatActivity {
     private static final String LOG_TAG = AddDevice.class.getSimpleName();
     public static GridView gridView;
     public static DeviceAdapter deviceAdapter;
-    public static String deviceStr;
     public static Context context;
+    final static String DEVICE_NAME = "name";
+    final static String DEVICE_TYPE = "type";
+    final String DEVICE_ID = "_id";
 
     @Override
     public void onStart() {
@@ -43,6 +48,28 @@ public class AddDevice extends AppCompatActivity {
         );
 
         gridView.setAdapter(deviceAdapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    openActivity(position);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void openActivity(int position) throws JSONException {
+        JSONArray deviceArray = new JSONArray(getDeviceStr());
+        JSONObject deviceObject = deviceArray.getJSONObject(position);
+        String type = deviceObject.getString(DEVICE_TYPE);
+        String id = deviceObject.getString(DEVICE_ID);
+
+        Intent intent = new Intent(this, DeviceDetails.class);
+        intent.putExtra(DeviceDetails.DETAIL_TYPE, type);
+        intent.putExtra(DeviceDetails.DETAIL_ID, id);
+        startActivity(intent);
     }
 
     public static ArrayList<Device> getDeviceList() {
@@ -60,8 +87,6 @@ public class AddDevice extends AppCompatActivity {
 
     public static ArrayList<Device> getDeviceListFromJson(String deviceStr)
             throws JSONException {
-        final String DEVICE_NAME = "name";
-        final String DEVICE_TYPE = "type";
 
         JSONArray deviceArray = new JSONArray(deviceStr);
         ArrayList<Device> resultList = new ArrayList<>();

@@ -31,35 +31,10 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
         ImageView icon = (ImageView) convertView.findViewById(R.id.icon);
         TextView name = (TextView) convertView.findViewById(R.id.name);
 
-        icon.setImageResource(getIcon(device.type));
+        icon.setImageResource(CloudConnect.getIcon(device.type));
         name.setText(device.name);
 
         return convertView;
 
-    }
-
-
-    public int getIcon(String type) {
-        int icon = 0;
-        switch (type) {
-            case "add" :
-                icon = R.drawable.ic_add_devices;
-                break;
-            case "fan" :
-                icon = R.drawable.ic_toys_black_24dp;
-                break;
-            case "bulb" :
-                icon = R.drawable.ic_lightbulb;
-                break;
-            case "fridge" :
-                icon = R.drawable.ic_kitchen_black_24dp;
-                break;
-            case "tv" :
-                icon = R.drawable.ic_tv;
-                break;
-            case "door-lock" :
-                icon = R.drawable.ic_lock_outline_black_24dp;
-        }
-        return icon;
     }
 }

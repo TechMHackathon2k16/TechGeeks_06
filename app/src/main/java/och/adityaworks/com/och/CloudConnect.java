@@ -17,7 +17,7 @@ import java.net.URL;
 public class CloudConnect {
     private static final String LOG_TAG = CloudConnect.class.getSimpleName();
     final static String TIMETABLE_BASE_URI =
-            "http://192.168.43.181:8080";
+            "http://192.168.43.40:8080";
     final static String API_PATH = "api";
     final static String DEVICE_PATH = "devices";
 
@@ -84,4 +84,45 @@ public class CloudConnect {
         return url;
     }
 
+    public static URL getURL(String targtePath, String exploredPath) {
+        Uri builtUri = Uri.parse(TIMETABLE_BASE_URI).buildUpon()
+                .appendPath(API_PATH)
+                .appendPath(targtePath)
+                .appendPath(exploredPath)
+                .build();
+
+        // Construct the URL for the private API at AdityaWorks at
+        // http://collegetools.adityaworks.com/
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+    public static int getIcon(String type) {
+        int icon = 0;
+        switch (type) {
+            case "add" :
+                icon = R.drawable.ic_add_devices;
+                break;
+            case "fan" :
+                icon = R.drawable.ic_toys_black_24dp;
+                break;
+            case "bulb" :
+                icon = R.drawable.ic_lightbulb;
+                break;
+            case "fridge" :
+                icon = R.drawable.ic_kitchen_black_24dp;
+                break;
+            case "tv" :
+                icon = R.drawable.ic_tv;
+                break;
+            case "door-lock" :
+                icon = R.drawable.ic_lock_outline_black_24dp;
+        }
+        return icon;
+    }
 }
