@@ -64,12 +64,18 @@ public class AddDevice extends AppCompatActivity {
         JSONArray deviceArray = new JSONArray(getDeviceStr());
         JSONObject deviceObject = deviceArray.getJSONObject(position);
         String type = deviceObject.getString(DEVICE_TYPE);
+        Log.v(LOG_TAG,"Device type is " + type);
         String id = deviceObject.getString(DEVICE_ID);
 
-        Intent intent = new Intent(this, DeviceDetails.class);
-        intent.putExtra(DeviceDetails.DETAIL_TYPE, type);
-        intent.putExtra(DeviceDetails.DETAIL_ID, id);
-        startActivity(intent);
+        if (type.equals("add")) {
+            startActivity(new Intent(this, NewDevice.class));
+        }
+        else {
+            Intent intent = new Intent(this, DeviceDetails.class);
+            intent.putExtra(DeviceDetails.DETAIL_TYPE, type);
+            intent.putExtra(DeviceDetails.DETAIL_ID, id);
+            startActivity(intent);
+        }
     }
 
     public static ArrayList<Device> getDeviceList() {
